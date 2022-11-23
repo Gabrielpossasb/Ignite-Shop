@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Stripe from "stripe";
@@ -15,7 +16,12 @@ interface SuccessProps {
 
 export default function Success({customerName, product}: SuccessProps) {
    return (
-      <SuccesContainer>
+      <>
+         <Head>
+            <title>Compra Realizada! | Ignite Shop</title>
+         </Head>
+
+         <SuccesContainer>
          <h1>Compra efetuada!</h1>
 
          <ImageContainer>
@@ -30,10 +36,20 @@ export default function Success({customerName, product}: SuccessProps) {
             Voltar ao catálogo
          </Link>
       </SuccesContainer>
+      </>
    )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+   if (!query.session_id) {
+      return {
+         redirect: {
+            destination: '/',
+            permanent: false,
+         }
+      }
+   }
+
    const sessionId = String(query.session_id);
 
    const session = await stripe.checkout.sessions.retrieve(sessionId, {
