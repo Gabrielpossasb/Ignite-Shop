@@ -12,6 +12,7 @@
 
 - Next
 - Vercel
+- Figma
 
 ## :rocket: Bibliotecas :
 
@@ -20,6 +21,5 @@
 - HTML
 - Stiches
 - Axios
-- Figma
 - Stripe
 - Keen Slider
