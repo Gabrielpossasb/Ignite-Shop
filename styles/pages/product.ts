@@ -61,6 +61,7 @@ export const ProductDetails = styled('div', {
       cursor: 'pointer',
       fontWeight: 'bold',
       fontSize: '1.125rem',
+      transition: 'all 0.4s ease-in-out',
 
       '&:disabled': {
          opacity: 0.6,
@@ -71,4 +72,19 @@ export const ProductDetails = styled('div', {
          backgroundColor: '$green300',
       }
    },
+
+   '.quantidyChange': {
+      marginTop: '2rem',
+      display: 'flex',
+      gap: 10,
+      alignItems: 'center',
+      fontSize: '1.3rem',
+
+
+      '.btnQuantidyChange': {
+         padding: '8px 14px',
+      }
+   },
+
+   
 })

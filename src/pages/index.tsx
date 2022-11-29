@@ -5,14 +5,16 @@ import { HomeContainer, Product } from '../../styles/pages/home'
 import { useKeenSlider } from 'keen-slider/react'
 import { GetStaticProps } from 'next'
 import { stripe } from '../lib/stripe'
-
-import img1 from '../assets/shirts/1.png'
-import img2 from '../assets/shirts/2.png'
-import img3 from '../assets/shirts/3.png'
-
-import 'keen-slider/keen-slider.cjs'
+import Router from "next/router"
 import Link from 'next/link'
 import Head from 'next/head'
+import { FiShoppingCart } from 'react-icons/fi'
+import ListProduct from '../components/ListProduct'
+import { Header } from '../../styles/global'
+
+import logoImg from '../assets/logo.svg'
+
+import 'keen-slider/keen-slider.cjs'
 
 interface HomeProps {
   products: {
@@ -36,18 +38,31 @@ export default function Home({ products }: HomeProps){
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
+
+      <Header>
+        <Image onClick={() => Router.push('/')} src={logoImg} alt=''/>
+
+        <ListProduct />
+      </Header>
     
       <HomeContainer ref={sliderRef} className='keen-slider'>
         { products.map( product => {
           return (
             <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
+              <div>
               <Product className='keen-slider__slide'>
                 <Image src={product.imageUrl} width={520} height={480} alt=''/>
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <div>
+                    <strong>{product.name}</strong>
+                    <text>{product.price}</text>
+                  </div>
+                  <button className="addCart" onClick={() => {}}>
+                    <FiShoppingCart size={32} color={'#e7e7e7'}/>
+                  </button>
                 </footer>
               </Product> 
+              </div>
             </Link>
           )
         })

@@ -6,7 +6,9 @@ export const HomeContainer = styled('main', {
    maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
    marginLeft: 'auto',
    minHeight: 480,
-   
+   background: 'none',
+
+   overflow: 'hidden',   
 })
 
 export const Product = styled('div', {
@@ -15,7 +17,6 @@ export const Product = styled('div', {
    cursor: 'pointer',
    position: 'relative',
    overflow: 'hidden',
-   
    
    display: 'flex',
    alignItems: 'center',
@@ -30,7 +31,7 @@ export const Product = styled('div', {
       bottom: '0.25rem',
       left: '0.25rem',
       right: '0.25rem',
-      padding: '2rem',
+      padding: '1rem',
 
       borderRadius: 6,
       display: 'flex',
@@ -48,10 +49,29 @@ export const Product = styled('div', {
          color: '$gray100'
       },
 
-      span: {
+      text: {
          fontSize: '20px',
          fontWeight: 'bold',
          color: '$green300',
+      },
+
+      div: {
+         display: 'flex',
+         flexDirection: 'column',
+         gap: 10
+      },
+
+      '.addCart': {
+         background: '$green500',
+         padding: '0.6rem',
+         border: 0,
+         borderRadius: 8,
+         transition: 'background ease 0.4s',
+         
+         '&:hover': {
+            background: '$green300',
+            cursor: 'pointer',
+         }
       },
    },
 

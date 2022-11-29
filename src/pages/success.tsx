@@ -3,33 +3,52 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Stripe from "stripe";
+import { Header } from "../../styles/global";
 import { ImageContainer, SuccesContainer } from "../../styles/pages/success";
 import { stripe } from "../lib/stripe";
+import Router from "next/router";
+
+import logoImg from '../assets/logo.svg'
 
 interface SuccessProps {
    customerName: string;
-   product: {
+   products: {
       name: string;
       imageUrl: string;
-   }
+      quantity: number;
+   }[];
 }
 
-export default function Success({customerName, product}: SuccessProps) {
+export default function Success({customerName, products}: SuccessProps) {
    return (
       <>
          <Head>
             <title>Compra Realizada! | Ignite Shop</title>
          </Head>
 
+         <Header>
+            <Image onClick={() => Router.push('/')} src={logoImg} alt=''/>
+         </Header>
+
          <SuccesContainer>
-         <h1>Compra efetuada!</h1>
 
          <ImageContainer>
-            <Image src={product.imageUrl} width={120} height={110} alt=''/>
+         {
+            products.map(item => (
+               <div className="ImageCont">
+                  <Image src={item.imageUrl} width={150} height={150} alt=''/>
+                  <strong className="quantity">
+                     {item.quantity}
+                  </strong>
+               </div>
+            ))
+         }
          </ImageContainer>
 
+         <h1>Compra efetuada!</h1>
+         
          <p>
-            Uhuul <strong>{customerName}</strong>, sua <strong>{product.name}</strong> já está a caminho da sua casa. 
+            Uhuul <strong>{customerName}</strong>, sua compra de <strong>{products.length} modelo{products.length > 1 && 's'}</strong> de camiseta{products.length > 1 && 's'} já está a caminho da sua casa. 
          </p>
 
          <Link href={'/'}>
@@ -57,15 +76,19 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
    })
 
    const customerName = session.customer_details.name;
-   const product = session.line_items.data[0].price.product as Stripe.Product
-
-   return {
+   const products = session.line_items.data.map((item) => {
+      const product = item.price.product as Stripe.Product;
+      return {
+        name: product.name,
+        imageUrl: product.images[0],
+        quantity: item.quantity,
+      };
+    });
+  
+    return {
       props: {
-         customerName,
-         product: {
-            name: product.name,
-            imageUrl: product.images[0],
-         }
-      }
-   }
+        customerName,
+        products: products,
+      },
+    };
 }

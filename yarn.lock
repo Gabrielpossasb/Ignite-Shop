@@ -1511,6 +1511,23 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-icon-base@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.0.4.tgz#b6b7662e8b009b270a4f0c213c222f5d6eca3b22"
+  integrity sha512-MTorsTuthjDh8a93vEIzYNZcWw+TVOuczrxi8kG9hJ0Ljnw320s2UA1rUBGtdWxyG61G79TIZ0ShiSnWm5hYXw==
+
+react-icons@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.6.0.tgz#f83eda179af5d02c047449a20b702c858653d397"
+  integrity sha512-rR/L9m9340yO8yv1QT1QurxWQvWpbNHqVX0fzMln2HEb9TEIrQRGsqiNFQfiv9/JEUbyHmHPlNTB2LWm2Ttz0g==
+
+react-icos@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-icos/-/react-icos-2.2.2.tgz#fb9ac09cf97e9d0340885faefcb51a4f755d0bd2"
+  integrity sha512-EnvGo6etv5XOdfF3BnGdB8dbZu8nD+o9027Wee/hk7g4gHmrJJM2NuXk2XMHP0J6M7tqrkHoFCel6fkqAzKo1A==
+  dependencies:
+    react-icon-base "2.0.4"
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

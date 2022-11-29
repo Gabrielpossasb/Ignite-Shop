@@ -2,36 +2,48 @@ import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Router from "next/router";
 import { useState } from "react";
 import Stripe from "stripe";
+import { Header } from "../../../styles/global";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../../styles/pages/product";
+import ListProduct from "../../components/ListProduct";
 import { stripe } from "../../lib/stripe";
 
-interface ProductProps {
+import logoImg from '../../assets/logo.svg'
+import { useCarShop } from "../../context/CarShop";
+
+export interface ProductProps {
    product: {
       id: string;
       name: string;
       imageUrl: string;
       price: string;
+      priceNumb: number;
       description: string;
       defaultPriceId: string;
-   }
+   };
+   quantidy: number;
 }
 
 export default function Product({ product }: ProductProps) {
+   const { AddCarShop } = useCarShop()
+
    const [ isCreatingCheckoutSession, setIsCreatingCheckoutSession ] = useState(false)
 
-   async function handleBuyProduct() {
+   const [ quantidy, setQuantidy ] = useState(1)
+
+   async function handleAddCart() {
       try {
          setIsCreatingCheckoutSession(true)
 
-         const response = await axios.post('/api/checkout', {
-            priceId: product.defaultPriceId,
+         AddCarShop({
+            product: product,
+            quantidy: quantidy
          })
-
-         const { checkoutUrl } = response.data;
-
-         window.location.href = checkoutUrl
+         
+         await new Promise(resolve => setTimeout(resolve, 1000))
+         setIsCreatingCheckoutSession(false)
       } catch (err) {
          setIsCreatingCheckoutSession(false)
          alert('Falha ao redirecionar ao checkout!')
@@ -44,6 +56,12 @@ export default function Product({ product }: ProductProps) {
             <title>{product.name} | Ignite Shop</title>
          </Head>
 
+         <Header>
+            <Image onClick={() => Router.push('/')} src={logoImg} alt=''/>
+
+            <ListProduct />
+         </Header>
+
          <ProductContainer>
             <ImageContainer>
                <Image src={product.imageUrl} width={520} height={480} alt=''/>
@@ -54,9 +72,19 @@ export default function Product({ product }: ProductProps) {
                <span>{product.price}</span>
 
                <p>{product.description}</p>
+               
+               <div className="quantidyChange">
+                  <button className="btnQuantidyChange" onClick={() => setQuantidy(quantidy != 1 ? (quantidy - 1) : 1)}>
+                     -
+                  </button>
+                  {quantidy}
+                  <button className="btnQuantidyChange" onClick={() => setQuantidy(quantidy + 1)}>
+                     +
+                  </button>
+               </div>
 
-               <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
-                  Comprar agora
+               <button disabled={isCreatingCheckoutSession} onClick={handleAddCart}>
+                  Adicionar ao carrinho
                </button>
          </ProductDetails>
          </ProductContainer>
@@ -90,6 +118,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
                style: 'currency',
                currency: 'BRL',
             }).format( price.unit_amount / 100 ),
+            priceNumb: price.unit_amount,
             description: product.description,
             defaultPriceId: price.id,
          }
