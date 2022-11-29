@@ -1,12 +1,9 @@
 <div align='center'>
-
-   ### :construction: **Projeto em desenvolvimento** :construction: ###
-   <br/>
-   <img height='100px' src='./src/assets/logo.svg' alt='logo para github'/>
+   <img height='90px' src='./src/assets/logo.svg' alt='logo para github'/>
       
    ####  ####
 
-   :link: <> :link:
+   :link: <https://ignite-shop-phi.vercel.app/> :link:
    
    
 </div>
@@ -15,6 +12,7 @@
 
 - Next
 - Vercel
+- Figma
 
 ## :rocket: Bibliotecas :
 
@@ -22,5 +20,6 @@
 - TypeScript
 - HTML
 - Stiches
-- Figma
+- Axios
 - Stripe
+- Keen Slider
