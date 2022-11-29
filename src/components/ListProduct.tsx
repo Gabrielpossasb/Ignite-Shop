@@ -58,7 +58,7 @@ export default function ListProduct() {
                      <div className="top">
                         {  carShop.map(data => { 
 
-                              total = (total + data.product.priceNumb) * data.quantidy;
+                              total = (data.quantidy * data.product.priceNumb) + total ;
                               totalItems = data.quantidy + totalItems;
 
                            return (
